@@ -83,3 +83,28 @@ RUN MIGRATION IN PRODUCTION MODE
 ```
 npx prisma migrate deploy
 ```
+
+#### Vitest - Installation
+
+```
+npm i vitest vite-tsconfig-paths -D
+```
+
+Create an file named vite.config.ts on root project
+
+```
+import { defineConfig } from 'vitest/config'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+export default defineConfig({
+  plugins: [tsconfigPaths()],
+})
+
+```
+
+On package.json file add this line on scripts section
+
+```
+"test": "vitest run",
+"test:watch": "vitest"
+```
