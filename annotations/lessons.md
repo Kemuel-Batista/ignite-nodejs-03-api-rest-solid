@@ -33,3 +33,64 @@ describe('Check-in Use Case', () => {
   })
 })
 ```
+
+#### VITEST ENVIRONMENT PRISMA
+
+Como fazer um banco de testes para cada switch de testes que existem na aplicação sem perder perfomance e sem perder também os testes E2E
+utiliza-se a estrátegia do environments, para fazer isso precisasse criar uma pasta dentro da pasta prisma com o seguinte nome
+
+```
+mkdir vitest-environment-prisma
+cd ./prisma/vitest-environment-prisma
+npm init -y
+nano prisma-test-environment.ts
+```
+
+prisma-test-environment.ts
+
+```
+import { Environment } from 'vitest'
+
+export default <Environment>{
+  name: 'prisma',
+  async setup() {
+    console.log('Setup')
+
+    return {
+      async teardown() {
+        console.log('Teardown')
+      },
+    }
+  },
+  transformMode: 'ssr',
+}
+```
+
+package.json on ./prisma/vitest-environment-prisma
+
+```
+{
+  "name": "vitest-environment-prisma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "prisma-test-environment.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+
+modify your package.json on the root project
+
+```
+"test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
+"test:install-prisma-environment": "npm link vitest-environment-prisma",
+"test": "vitest run --dir src/use-cases",
+"test:watch": "vitest --dir src/use-cases",
+"pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
+"test:e2e": "vitest run --dir src/http",
+```
+
+Para cada ambiente que você queira em um banco de dados, criar um ambiente de testes, o postgresql oferece uma forma que é utilizar os schemas do banco, todo banco vem com o default schema como public, para utilizar um ambiente de testes no banco de dados utilizamos um novo schema para exclusivamente utilizar os dados de testes sem ter que criar um novo banco de dados e um ambiente separado de produção (schema=public)
+
+Logo criamos um schema para cada teste que tivermos conforme o arquivo que está na pasta ./prisma/vitest-environment-prisma
