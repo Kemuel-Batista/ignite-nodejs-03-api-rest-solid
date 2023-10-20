@@ -1,7 +1,7 @@
-import { app } from '@/app'
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 import request from 'supertest'
+import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
 describe('Nearby Gyms (e2e)', () => {
   beforeAll(async () => {
@@ -12,27 +12,27 @@ describe('Nearby Gyms (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to list nearby gyms', async () => {
+  it('should be able list nearby gyms', async () => {
     const { token } = await createAndAuthenticateUser(app)
 
     await request(app.server)
-      .get('/gyms')
+      .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'JavaScript Gym',
         description: 'Some description.',
-        phone: '123456789',
-        latitude: -25.551136,
-        longitude: -49.1929618,
+        phone: '1199999999',
+        latitude: -27.2092052,
+        longitude: -49.6401091,
       })
 
     await request(app.server)
-      .get('/gyms')
+      .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
         title: 'TypeScript Gym',
         description: 'Some description.',
-        phone: '123456789',
+        phone: '1199999999',
         latitude: -27.0610928,
         longitude: -49.5229501,
       })
@@ -40,8 +40,8 @@ describe('Nearby Gyms (e2e)', () => {
     const response = await request(app.server)
       .get('/gyms/nearby')
       .query({
-        latitude: -25.551136,
-        longitude: -49.1929618,
+        latitude: -27.2092052,
+        longitude: -49.6401091,
       })
       .set('Authorization', `Bearer ${token}`)
       .send()

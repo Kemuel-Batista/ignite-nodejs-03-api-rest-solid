@@ -1,7 +1,7 @@
-import { app } from '@/app'
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 import request from 'supertest'
+import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
 
 describe('Profile (e2e)', () => {
   beforeAll(async () => {
@@ -22,7 +22,9 @@ describe('Profile (e2e)', () => {
 
     expect(profileResponse.statusCode).toEqual(200)
     expect(profileResponse.body.user).toEqual(
-      expect.objectContaining({ email: 'john.doe@gmail.com' }),
+      expect.objectContaining({
+        email: 'johndoe@example.com',
+      }),
     )
   })
 })

@@ -22,7 +22,7 @@ model User {
 }
 
 model CheckIn {
-  id           String    @id @default("uuid()")
+  id           String    @id @default(uuid())
   created_at   DateTime  @default(now())
   validated_at DateTime?
 
@@ -36,7 +36,7 @@ model CheckIn {
 }
 
 model Gym {
-  id          String    @id @default("uuid()")
+  id          String    @id @default(uuid())
   title       String
   description String?
   phone       String?
