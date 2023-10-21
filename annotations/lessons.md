@@ -94,3 +94,15 @@ modify your package.json on the root project
 Para cada ambiente que você queira em um banco de dados, criar um ambiente de testes, o postgresql oferece uma forma que é utilizar os schemas do banco, todo banco vem com o default schema como public, para utilizar um ambiente de testes no banco de dados utilizamos um novo schema para exclusivamente utilizar os dados de testes sem ter que criar um novo banco de dados e um ambiente separado de produção (schema=public)
 
 Logo criamos um schema para cada teste que tivermos conforme o arquivo que está na pasta ./prisma/vitest-environment-prisma
+
+#### CI - CONTINUOUS INTEGRATION
+
+Basicamente para estrategias de workflows, rotinas para integração de código continua, ou seja, para receber novos códigos da nossa aplicação continuamente, isso se deve principalmente quando temos um projeto que trabalhar várias pessoas no mesmo projeto e várias pessoas estão enviando novos códigos para dentro do nosso projeto, a gente precisa ter muitas vezes uns fluxos que executam e validam se esse novos códigos dos usuários que estão chegando no nosso repositório estão vindo da maneira que espera que eles venham
+
+CI != CD (CONTINUOUS DEPLOYMENT/DELIVERY) -> Deploy Automatico para quando chegar um novo código
+
+Para configurar o Github Actions, criamos uma pasta .github na raiz do projeto, dentro dela criamos workflows e para cada workflow que queremos executar criamos um arquivo
+
+Workflow -> uma esteira de comandos, são vários comandos que quero executar quando um código novo chegar dentro do meu repositório
+
+Existem steps já preparados no https://github.com/marketplace?type=actions

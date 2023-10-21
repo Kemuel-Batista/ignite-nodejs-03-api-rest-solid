@@ -1,0 +1,20 @@
+name: Run Unit Tests
+
+on: [push]
+
+jobs:
+  run-unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest # Quero realizar os testes unitários em um ubuntu de ultima versão
+
+    steps: # Processo passo a passo para executar minha aplicação
+      - uses: actions/checkout@v3 # Baixar código dentro da nossa máquina
+
+      - uses: actions/setup-node@v3 # Baixar o node na máquina
+        with:
+          node-version: 18 # Versão do Node
+          cache: 'npm' # Package manager, se eu não mudar, próxima vez que for ser executado ele vai utilizar o cache
+
+      - run: npm ci # NPM INSTALL, a diferença é que o ci, não vai perguntar nenhuma interação com o usuário
+
+      - run: npm run test
